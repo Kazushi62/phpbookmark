@@ -1,3 +1,28 @@
+<?php
+//GET送信されたidを取得(URLの後ろについてるデータ)
+require_once('funcs.php');
+$pdo = db_conn();
+
+$id = $_GET['id'];
+//echo "id: ". $id;
+
+//3．データ取得SQLを作成（SELECT文）
+$stmt = $pdo->prepare('SELECT * FROM gs_bm_table where ユニーク=:id');
+$stmt->bindValue(':id',$id,PDO::PARAM_INT);
+$status = $stmt->execute();
+
+//4．データ表示
+$view = '';
+
+if ($status == false) {
+  sql_error($stmt);
+}else{
+  $result = $stmt->fetch();
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -28,11 +53,12 @@
 
 <header>Bookmark Form</header>
 
-<form id="form" class="topBefore" method="post" action="insert.php">
+<form id="form" class="topBefore" method="post" action="bm_update.php">
     
-  <input id="bookname" type="text" placeholder="Bookname" name="bookname">
-  <input id="bookURL" type="text" placeholder="URL" name="bookURL">
-  <textarea id="comments" type="text" placeholder="Comments" name="kanso"></textarea>
+  <input id="bookname" type="text" value="<?= $result['書籍名']?>" name="bookname">
+  <input id="bookURL" type="text" value="<?= $result['書籍URL']?>" name="bookURL">
+  <textarea id="comments" type="text"  name="kanso"><?= $result['書籍コメント']?></textarea>
+  <input type="hidden" name="id" value="<?= $result['ユニーク']?>">
   <input id="submit" type="submit" value="GO!">
   
 </form>

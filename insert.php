@@ -8,12 +8,18 @@ $kanso = $_POST['kanso'];
 
 
 // 2. DB接続します
-try {
+//try {
   //Password:MAMP='root',XAMPP=''
-  $pdo = new PDO('mysql:dbname=kazushi62_gs_kk;charset=utf8;host=mysql57.kazushi62.sakura.ne.jp','kazushi62','Kazushi562');
-} catch (PDOException $e) {
-  exit('DBConnectError:'.$e->getMessage());
-}
+//  $pdo = new PDO//('mysql:dbname=kazushi62_gs_kk;
+  //charset=utf8;host=mysql57.kazushi62.sakura.ne.jp','kazushi62','Kazushi562');
+//  ('mysql:dbname=gs_kk;
+//  charset=utf8;host=localhost','root','root');
+//} catch (PDOException $e) {
+//  exit('DBConnectError:'.$e->getMessage());
+//}
+require_once('funcs.php');
+$pdo = db_conn();
+
 
 
 // ３．SQL文を用意(データ登録：INSERT)
@@ -33,10 +39,12 @@ $status = $stmt->execute();
 // 6．データ登録処理後
 if($status==false){
   //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
-  $error = $stmt->errorInfo();
-  exit("ErrorMassage:".$error[2]);
+  //$error = $stmt->errorInfo();
+  //exit("ErrorMassage:".$error[2]);
+  sql_error($stmt);
 }else{
   //５．index.phpへリダイレクト
-  header('Location:index.php');
+  //header('Location:index.php');
+  redirect('index.php');
 }
 ?>

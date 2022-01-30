@@ -1,11 +1,16 @@
 <?php
 //1.  DB接続します
-try {
+//try {
   //Password:MAMP='root',XAMPP=''
-  $pdo = new PDO('mysql:dbname=kazushi62_gs_kk;charset=utf8;host=mysql57.kazushi62.sakura.ne.jp','kazushi62','Kazushi562');
-} catch (PDOException $e) {
-  exit('DBConnectError:'.$e->getMessage());
-}
+  //$pdo = new PDO//('mysql:dbname=kazushi62_gs_kk;charset=utf8;host=mysql57.kazushi62.sakura.ne.jp','kazushi62','Kazushi562');
+  //('mysql:dbname=gs_kk;
+  //charset=utf8;host=localhost','root','root');
+//} catch (PDOException $e) {
+//  exit('DBConnectError:'.$e->getMessage());
+//}
+require_once('funcs.php');
+$pdo = db_conn();
+
 
 //２．SQL文を用意(データ取得：SELECT)
 $stmt = $pdo->prepare("SELECT * FROM gs_bm_table");
@@ -25,18 +30,23 @@ if($status==false) {
   //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
   while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){ 
     $view .= "<p>";
+    $view .= '<a href="bm_update_view.php?id='. $result["ユニーク"].'">';
     $view .= "Date:";
     $view .= $result['登録日時'].'<br> bookname: '.$result['書籍名'];
     $view .= "<br>";
     $view .= "Comments: ";
     $view .= $result['書籍コメント'];
-    $view .= "</p>";
-    $view .= "<p>";
+    $view .= "</a>";
+    $view .= "<br>";
     $view .= "<a href='";
     $view .= $result['書籍URL'];
     $view .= "'>";
     $view .= "Book Link";
     $view .= "</a>"; 
+    $view .= "<br>";
+    $view .= '<a href="bm_delete.php?id='.$result['ユニーク'].'">';//追記
+    $view .= '[削除]';//追記
+    $view .= '</a>';//追記
     $view .= "</p>";
   }
 
@@ -68,7 +78,7 @@ if($status==false) {
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<h1 class="text-center">Previsou Bookmark list</h1>
+<h1 class="text-center">Previous Bookmark list</h1>
 
 <div class="data-position text-center">
     <div><?= $view?></div>
