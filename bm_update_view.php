@@ -63,8 +63,11 @@ if ($status == false) {
   
 </form>
 
-<div class="footerlink"><a href="./bm_list_view.php">Previous Bookmark list</a></div>
-
+<div class="footerflex">
+  <div class="footerlink"><a href="./bm_list_view.php">Previous Bookmark list</a></div>
+  <div class="footerlink"><a href="./login.php">Log-In</a></div>
+  <div class="footerlink"><a href="./logout.php">Log-Out</a></div>
+</div>
 
 <!-- Main[End] -->
 

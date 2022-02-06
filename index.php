@@ -1,3 +1,8 @@
+<?php
+session_start();
+$user_name = $_SESSION['name'];
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -27,7 +32,7 @@
 </div>-->
 
 <header>Bookmark Form</header>
-
+<div class="greeting text-center"> Hello <?= $user_name ?>!!</div>
 <form id="form" class="topBefore" method="post" action="insert.php">
     
   <input id="bookname" type="text" placeholder="Bookname" name="bookname">
@@ -37,7 +42,11 @@
   
 </form>
 
-<div class="footerlink"><a href="./bm_list_view.php">Previous Bookmark list</a></div>
+<div class="footerflex">
+  <div class="footerlink"><a href="./bm_list_view.php">Previous Bookmark list</a></div>
+  <div class="footerlink"><a href="./login.php">Log-In</a></div>
+  <div class="footerlink"><a href="./logout.php">Log-Out</a></div>
+</div>
 
 
 <!-- Main[End] -->

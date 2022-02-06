@@ -8,7 +8,17 @@
 //} catch (PDOException $e) {
 //  exit('DBConnectError:'.$e->getMessage());
 //}
+//SESSIONスタート
+Session_start();
+
+//関数を呼び出す
 require_once('funcs.php');
+
+//ログインチェック
+loginCheck();
+
+//以下ログインユーザーのみ
+
 $pdo = db_conn();
 
 

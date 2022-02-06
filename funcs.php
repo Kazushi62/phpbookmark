@@ -9,10 +9,15 @@ function h($str)
 
 function db_conn(){
     try {
-        $db_name = "gs_kk";    //データベース名
+        $db_name = "gs_kk";
         $db_id   = "root";      //アカウント名
         $db_pw   = "root";      //パスワード：XAMPPはパスワード無しに修正してください。
         $db_host = "localhost"; //DBホスト
+        
+        //$db_name = "kazushi62_gs_kk";    //データベース名
+        //$db_id   = "kazushi62";      //アカウント名
+        //$db_pw   = "Kazushi562";      //パスワード：XAMPPはパスワード無しに修正してください。
+        //$db_host = "mysql57.kazushi62.sakura.ne.jp"; //DBホスト
         $pdo = new PDO('mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host, $db_id, $db_pw);
         return $pdo;//ここを追記！
     } catch (PDOException $e) {
@@ -32,4 +37,13 @@ function redirect($file_name){
     exit();
 }
 
+//ログインチェック
+function loginCheck(){
+    if( $_SESSION["chk_ssid"] != session_id() ){
+      exit('LOGIN ERROR');
+    }else{
+      session_regenerate_id(true);
+      $_SESSION['chk_ssid'] = session_id();
+    }
+  }
 
